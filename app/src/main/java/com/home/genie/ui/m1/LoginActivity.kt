@@ -27,6 +27,8 @@ class LoginActivity : AppCompatActivity() {
     private fun initControl() {
         binding.getVerification.setOnClickListener {
             if (validation()) {
+                OtpActivity.PHONE_NUMBER = "${binding.ccpMobile.selectedCountryCodeWithPlus} ${binding.mEnterMobile.text}"
+
                 moveActivity(OtpActivity())
             }
 

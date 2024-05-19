@@ -3,5 +3,5 @@
     <string name="todo">TODO</string>
     <string name="jjj">dsdbbjbdfbdb</string>
     <string name="click_me">Click Me</string>
-    <string name="search_for_ac_services">Search For Ac Services</string>
+    <string name="search_for_ac_services">Ex. Search for \'Ac Services\'</string>
 </resources>

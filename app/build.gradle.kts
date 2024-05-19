@@ -51,5 +51,8 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation ("com.airbnb.android:lottie:6.2.0")
     implementation ("com.hbb20:ccp:2.6.1")
+    implementation ("com.chaos.view:pinview:1.4.4")
+    implementation ("com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2")
+
 
 }

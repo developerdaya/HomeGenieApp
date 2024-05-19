@@ -88,7 +88,7 @@
             tools:layout_editor_absoluteX="16dp">
 
             <com.hbb20.CountryCodePicker
-                android:id="@+id/ccp_mobile"
+                android:id="@+id/ccpMobile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="10dp"
@@ -131,11 +131,11 @@
                 android:maxLength="10"
                 android:paddingVertical="15dp"
                 android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="@id/ccp_mobile"
+                app:layout_constraintBottom_toBottomOf="@id/ccpMobile"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/ccp_mobile"
-                app:layout_constraintTop_toTopOf="@+id/ccp_mobile"
+                app:layout_constraintStart_toEndOf="@+id/ccpMobile"
+                app:layout_constraintTop_toTopOf="@+id/ccpMobile"
 
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
