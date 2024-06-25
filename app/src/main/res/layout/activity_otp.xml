@@ -71,12 +71,12 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:focusable="auto"
-            app:itemCount="4"
+            app:itemCount="6"
             android:fontFamily="@font/montserrat_medium"
             android:cursorVisible="true"
-            app:itemSpacing="30dp"
-            app:itemHeight="55dp"
-            app:itemWidth="55dp"
+            app:itemSpacing="10dp"
+            app:itemHeight="50dp"
+            app:itemWidth="50dp"
             app:itemRadius="10dp"
             android:textSize="16sp"
             android:textColor="@color/black"
@@ -101,10 +101,49 @@
             android:fontFamily="@font/montserrat_semibold"
             android:gravity="center"
             android:paddingVertical="18dp"
-            android:text="Submit"
+            android:text="Verify"
             android:textColor="@color/gray"
             app:layout_constraintTop_toBottomOf="@+id/pinViewOtp"
             tools:layout_editor_absoluteX="16dp" />
+
+
+
+
+        <TextView
+            android:id="@+id/otpText1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:fontFamily="@font/montserrat_semibold"
+            android:text="Didn't receive OTP? Resend Again"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginTop="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSubmit" />
+
+
+
+
+        <TextView
+            android:id="@+id/otpText2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="Resend OTP in 00:00"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/otpText1" />
+
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

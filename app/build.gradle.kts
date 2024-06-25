@@ -17,6 +17,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+        setProperty("archivesBaseName", "Home-Genie-$versionName")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -46,6 +47,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.common.ktx)
+    implementation(libs.firebase.messaging.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -53,6 +56,17 @@ dependencies {
     implementation ("com.hbb20:ccp:2.6.1")
     implementation ("com.chaos.view:pinview:1.4.4")
     implementation ("com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2")
+
+    implementation( "com.squareup.retrofit2:retrofit:2.9.0")
+    implementation( "com.squareup.retrofit2:adapter-rxjava2:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
+    implementation("com.google.code.gson:gson:2.9.0")
+    implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
+    implementation("io.reactivex.rxjava2:rxjava:2.2.21")
+    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-scalars:2.9.0")
+
 
 
 }

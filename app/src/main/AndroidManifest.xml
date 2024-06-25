@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
+<uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/home_logo1"
         android:label="@string/app_name"
+        android:usesCleartextTraffic="true"
         android:roundIcon="@drawable/home_logo1"
         android:supportsRtl="true"
         android:theme="@style/Theme.HomeGenie"
         tools:targetApi="31">
+
         <activity
-            android:name=".ui.m1.HomeActivity"
-            android:exported="true" >
+            android:name=".ui.m1.InfoActivity"
+            android:exported="true">
 
         </activity>
+
+        <activity
+            android:name=".ui.m1.HomeActivity"
+            android:exported="true"></activity>
         <activity
             android:name=".ui.m1.ForgetActivity"
             android:exported="false"
@@ -28,7 +34,9 @@
         <activity
             android:name=".ui.m1.OtpActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+
+        </activity>
         <activity
             android:name=".ui.m1.SignupActivity"
             android:exported="false"
@@ -47,7 +55,6 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

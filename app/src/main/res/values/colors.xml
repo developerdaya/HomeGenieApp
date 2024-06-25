@@ -7,4 +7,7 @@
     <color name="gray">#999999</color>
     <color name="light_white">#EFEFEF</color>
     <color name="green">#90BA90</color>
+    <color name="red">#F44336</color>
+    <color name="dark_green">#006064</color>
+    <color name="red_error">#973E37</color>
 </resources>

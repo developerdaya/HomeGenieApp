@@ -1,17 +1,36 @@
 package com.home.genie.ui.m1
 
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.viewpager.widget.ViewPager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.home.genie.R
 import com.home.genie.databinding.ActivityHomeBinding
+import com.home.genie.databinding.ErrorDialogBinding
+import com.home.genie.databinding.LogoutDialogBinding
+import com.home.genie.databinding.OtpVerifyDialogBinding
 import com.home.genie.ui.m1.adapter.BeautyAdapter
 import com.home.genie.ui.m1.adapter.BeautyModel
 import com.home.genie.ui.m1.adapter.CleaningAdapter
 import com.home.genie.ui.m1.adapter.ViewPagerAdapter
+import com.home.genie.ui.moveActivity
+import com.home.genie.ui.showToast
+import com.home.genie.util.ErrorUtil
+import com.home.genie.util.SPreferenceUtils
+import com.home.genie.util.hideProgress
+import com.home.genie.util.showProgress
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.Timer
 import java.util.TimerTask
 
@@ -32,6 +51,9 @@ class HomeActivity : AppCompatActivity() {
         initControl()
 
     }
+
+
+
     private fun startAutoScroll() {
         val handler = android.os.Handler()
         val update = Runnable {
@@ -57,8 +79,37 @@ class HomeActivity : AppCompatActivity() {
     companion object {
         private const val NUM_PAGES = 6 /* Set the number of pages in your ViewPager adapter */
     }
+    fun logoutDialog(context: Context)
+    {
+        val binding = LogoutDialogBinding.inflate(LayoutInflater.from(context))
+        val mBuilder = AlertDialog.Builder(context)
+            .setView(binding.root)
+            .create()
+        mBuilder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        mBuilder.setCancelable(false)
+        mBuilder.show()
+        binding.myButtonSkip.setOnClickListener {
+            mBuilder.dismiss()
+        }
+
+        binding.myButton.setOnClickListener {
+            mBuilder.dismiss()
+            SPreferenceUtils.getInstance(this).accessToken =""
+            SPreferenceUtils.getInstance(this).isLogin =false
+            moveActivity(LoginActivity())
+            finishAffinity()
+        }
+
+
+
+
+    }
 
     private fun initControl() {
+        binding.mLogout.setOnClickListener {
+            logoutDialog(this)
+
+        }
 
         var lis3 = ArrayList<BeautyModel>()
         lis3.add(BeautyModel("Pain relief",R.drawable.beauty))

@@ -2,9 +2,350 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
     tools:context=".ui.m1.SignupActivity">
+
+
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.5"
+        tools:layout_editor_absoluteX="16dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/home_logo1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-40dp"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Get Started"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+        <TextView
+            android:id="@+id/otpText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="by creating a new account"
+            android:textSize="14sp"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <EditText
+            android:id="@+id/mFirstName"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_round"
+            android:fontFamily="@font/montserrat_regular"
+            android:hint="First Name"
+            android:inputType="text"
+            android:maxLength="40"
+            android:paddingStart="20dp"
+            android:paddingEnd="50dp"
+            android:paddingVertical="14dp"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/otpText" />
+
+          <EditText
+            android:id="@+id/mLastName"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_round"
+            android:fontFamily="@font/montserrat_regular"
+            android:hint="Last Name"
+            android:inputType="text"
+            android:maxLength="40"
+            android:paddingStart="20dp"
+            android:paddingEnd="50dp"
+            android:paddingVertical="14dp"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mFirstName" />
+
+
+
+
+
+
+
+
+
+        <EditText
+            android:id="@+id/mValidEmail"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_round"
+            android:fontFamily="@font/montserrat_regular"
+            android:hint="Valid Email"
+            android:inputType="text"
+            android:maxLength="50"
+            android:paddingStart="20dp"
+            android:paddingEnd="50dp"
+            android:paddingVertical="15dp"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mLastName" />
+
+        <ImageView
+            android:id="@+id/mEmail1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="15dp"
+            android:src="@drawable/mail"
+            app:layout_constraintBottom_toBottomOf="@+id/mValidEmail"
+            app:layout_constraintEnd_toEndOf="@+id/mValidEmail"
+            app:layout_constraintTop_toTopOf="@+id/mValidEmail"
+            app:tint="#6A6A6A" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mobileLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="20dp"
+            android:paddingHorizontal="15dp"
+            android:background="@drawable/bg_round"
+            app:layout_constraintTop_toBottomOf="@+id/mValidEmail"
+            tools:layout_editor_absoluteX="16dp">
+
+
+            <ImageView
+                android:id="@+id/mFlag"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/india_flag"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+
+            <TextView
+                android:id="@+id/ccpMobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:paddingEnd="10dp"
+                android:fontFamily="@font/montserrat_semibold"
+                android:text="+91"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/mView"
+                app:layout_constraintStart_toEndOf="@+id/mFlag"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5" />
+
+            <View
+                android:id="@+id/mView"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:background="@color/smooth_white"
+                app:layout_constraintBottom_toBottomOf="@+id/mEnterMobile"
+                app:layout_constraintStart_toEndOf="@+id/ccpMobile"
+                app:layout_constraintTop_toTopOf="@+id/mEnterMobile" />
+
+            <EditText
+                android:id="@+id/mEnterMobile"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:background="@null"
+                android:fontFamily="@font/montserrat_regular"
+                android:hint="Phone number"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:paddingVertical="15dp"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@id/ccpMobile"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/ccpMobile"
+                app:layout_constraintTop_toTopOf="@+id/ccpMobile"
+
+                />
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        <EditText
+            android:id="@+id/mEnterPassword"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_round"
+       android:hint="Strong Password"
+            android:fontFamily="@font/montserrat_regular"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="15dp"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mobileLayout" />
+
+        <ImageView
+            android:id="@+id/passEye"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="15dp"
+            android:src="@drawable/hide"
+            app:layout_constraintBottom_toBottomOf="@+id/mEnterPassword"
+            app:layout_constraintEnd_toEndOf="@+id/mEnterPassword"
+            app:layout_constraintTop_toTopOf="@+id/mEnterPassword"
+            app:tint="#6A6A6A" />
+
+        <EditText
+            android:id="@+id/mEnterPassword2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_round"
+            android:fontFamily="@font/montserrat_regular"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="15dp"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mEnterPassword" />
+
+        <ImageView
+            android:id="@+id/passEye2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="15dp"
+            android:src="@drawable/hide"
+            app:layout_constraintBottom_toBottomOf="@+id/mEnterPassword2"
+            app:layout_constraintEnd_toEndOf="@+id/mEnterPassword2"
+            app:layout_constraintTop_toTopOf="@+id/mEnterPassword2"
+            app:tint="#6A6A6A" />
+
+
+
+
+
+
+        <CheckBox
+            android:id="@+id/mTermsAndConditions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="10dp"
+            android:button="@null"
+            android:background="@null"
+            android:drawableTint="@color/dark_green"
+            android:drawableStart="@drawable/state_check"
+            android:buttonTint="@color/dark_green"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mEnterPassword2"/>
+
+
+        <TextView
+            android:id="@+id/mTerms"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_regular"
+            android:layout_marginStart="-10dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/mTermsAndConditions"
+            android:text="By creating an account, I agree to the Terms and Conditions"
+            app:layout_constraintTop_toBottomOf="@+id/mEnterPassword2"
+            />
+
+
+        <TextView
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginHorizontal="47dp"
+            android:background="@drawable/bg_round_green"
+            android:fontFamily="@font/montserrat_semibold"
+            android:gravity="center"
+            android:paddingVertical="18dp"
+            android:text="Submit"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/mTerms"
+            tools:layout_editor_absoluteX="16dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+
+    <ImageView
+        android:id="@+id/spa"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:rotation="0"
+        android:alpha="0.9"
+        android:src="@drawable/spa1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.5" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
