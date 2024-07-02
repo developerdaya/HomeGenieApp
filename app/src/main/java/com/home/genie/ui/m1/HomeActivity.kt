@@ -261,7 +261,7 @@ class HomeActivity : AppCompatActivity() {
         var lis2 = ArrayList<BeautyModel>()
         lis2.add(BeautyModel("Home Services", R.drawable.house_icon))
         lis2.add(BeautyModel("Repairs", R.drawable.repair_tool))
-        lis2.add(BeautyModel("Education & Coaching", R.drawable.learning_support))
+        lis2.add(BeautyModel("Food & Beverage", R.drawable.dish_icon))
 
         lis2.add(BeautyModel("Health & Medical", R.drawable.public_health))
         lis2.add(BeautyModel("Automotive Services", R.drawable.car_services))

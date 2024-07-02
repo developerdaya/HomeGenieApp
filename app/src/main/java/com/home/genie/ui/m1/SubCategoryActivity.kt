@@ -54,12 +54,12 @@ class SubCategoryActivity : AppCompatActivity() {
 
 
         var educationList = ArrayList<BeautyModel>()
-        educationList.add(BeautyModel("Academic Tutoring", R.drawable.learning_support))
-        educationList.add(BeautyModel("Language Classes", R.drawable.learning_support))
-        educationList.add(BeautyModel("Music Lessons", R.drawable.learning_support))
+        educationList.add(BeautyModel("Home Chef", R.drawable.dish_icon))
+        educationList.add(BeautyModel("Food Delivery", R.drawable.dish_icon))
+        educationList.add(BeautyModel("Baking Services", R.drawable.dish_icon))
 
-        educationList.add(BeautyModel("Dance Classes", R.drawable.learning_support))
-        educationList.add(BeautyModel("Professional Skills", R.drawable.learning_support))
+        educationList.add(BeautyModel("Meal Prepping", R.drawable.dish_icon))
+        educationList.add(BeautyModel("Beverage Delivery", R.drawable.dish_icon))
 
 
 
