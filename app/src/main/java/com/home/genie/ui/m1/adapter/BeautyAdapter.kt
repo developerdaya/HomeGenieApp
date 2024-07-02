@@ -1,12 +1,14 @@
 package com.home.genie.ui.m1.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.home.genie.databinding.LayoutBeautyBinding
+import com.home.genie.ui.m1.SubCategoryActivity
 
-class BeautyAdapter(val data: List<BeautyModel>) :
+class BeautyAdapter(var context: Context,val data: List<BeautyModel>) :
     RecyclerView.Adapter<BeautyAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -17,7 +19,7 @@ class BeautyAdapter(val data: List<BeautyModel>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
-        holder.bind(item)
+        holder.bind(item,position)
     }
 
     override fun getItemCount(): Int {
@@ -26,10 +28,14 @@ class BeautyAdapter(val data: List<BeautyModel>) :
 
     inner class ViewHolder(private val binding: LayoutBeautyBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(item: BeautyModel) {
+        fun bind(item: BeautyModel,position1: Int) {
             binding.productName.text = item.name
             binding.productImage.setImageResource(item.image)
+            binding.root.setOnClickListener {
+                SubCategoryActivity.mTitle = item.name
+                SubCategoryActivity.mPosition = position1.toString()
+                context.startActivity(Intent(context, SubCategoryActivity::class.java))
+            }
 
         }
     }

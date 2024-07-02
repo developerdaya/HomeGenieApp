@@ -34,6 +34,61 @@ private constructor(val context: Context) {
         get() = sharedPreferences["deviceToken"]!!
         set(value) = sharedPreferences.set("deviceToken", value)
 
+       var sector: String
+        get() = sharedPreferences["sector"]!!
+        set(value) = sharedPreferences.set("sector", value)
+
+
+
+           var buildingNo: String
+        get() = sharedPreferences["buildingNo"]!!
+        set(value) = sharedPreferences.set("buildingNo", value)
+
+
+
+
+            var city: String
+        get() = sharedPreferences["city"]!!
+        set(value) = sharedPreferences.set("city", value)
+
+
+           var state: String
+        get() = sharedPreferences["state"]!!
+        set(value) = sharedPreferences.set("state", value)
+
+
+
+            var postalCode: String
+        get() = sharedPreferences["postalCode"]!!
+        set(value) = sharedPreferences.set("postalCode", value)
+
+
+
+       var countryName: String
+        get() = sharedPreferences["countryName"]!!
+        set(value) = sharedPreferences.set("countryName", value)
+
+
+
+     var addressLocation: String
+        get() = sharedPreferences["addressLocation"]!!
+        set(value) = sharedPreferences.set("addressLocation", value)
+
+    var latitude: String
+        get() = sharedPreferences["latitude",""]!!
+        set(value) = sharedPreferences.set("latitude", value)
+
+    var longitude: String
+        get() = sharedPreferences["longitude",""]!!
+        set(value) = sharedPreferences.set("longitude", value)
+
+
+
+
+
+
+
+
     var is_mobileVerified: Boolean
         get() = sharedPreferences["is_mobileVerified",false]!!
         set(value) = sharedPreferences.set("is_mobileVerified", value)
@@ -74,13 +129,6 @@ private constructor(val context: Context) {
         get() = sharedPreferences["UserOtp", ""]!!
         set(value) = sharedPreferences.set("UserOtp", value)
 
-    var latitude: String
-        get() = sharedPreferences["latitude",""]!!
-        set(value) = sharedPreferences.set("latitude", value)
-
-    var longitude: String
-        get() = sharedPreferences["longitude",""]!!
-        set(value) = sharedPreferences.set("longitude", value)
 
     var profile_image: String
         get() = sharedPreferences["profile_image",""]!!

@@ -1,24 +1,31 @@
 package com.home.genie.ui.m1
 
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.provider.Settings
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.home.genie.R
 import com.home.genie.databinding.ActivityLoginBinding
 import com.home.genie.databinding.ErrorDialogBinding
+import com.home.genie.databinding.GpsDialogBinding
 import com.home.genie.databinding.ProfileCreatedDialogBinding
 import com.home.genie.ui.moveActivity
 import com.home.genie.ui.showToast
 import com.home.genie.util.ErrorUtil
+import com.home.genie.util.GPSTracker
 import com.home.genie.util.SPreferenceUtils
 import com.home.genie.util.hideProgress
 import com.home.genie.util.showProgress
@@ -38,6 +45,31 @@ class LoginActivity : AppCompatActivity() {
         initViews()
         initControl()
         observer()
+        getLocation1()
+
+    }
+    fun getLocation1() {
+        ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 101)
+
+
+    }
+    fun gpsDialog(context: Context) {
+        val binding = GpsDialogBinding.inflate(LayoutInflater.from(context))
+        val mBuilder = AlertDialog.Builder(context)
+            .setView(binding.root)
+            .create()
+        mBuilder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        mBuilder.setCancelable(false)
+        mBuilder.show()
+        binding.myButtonSkip.setOnClickListener {
+            mBuilder.dismiss()
+        }
+
+        binding.myButton.setOnClickListener {
+            mBuilder.dismiss()
+            startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+
+        }
 
 
     }
@@ -98,14 +130,20 @@ class LoginActivity : AppCompatActivity() {
         }
         binding.mLogin.setOnClickListener {
             hideKeyboard()
-            if (validation()) {
-                m1ViewModel.hitLogin(
-                    mobile_number = binding.mEnterMobile.text.toString(),
-                    password = binding.mEnterPassword.text.toString(),
-                    device_token = "asdf",
-                    device_type = 2,
-                    code = "+91"
-                )
+            if (!GPSTracker(this).isGPSEnabled)
+            {
+                gpsDialog(this)
+            }
+            else{
+                if (validation()) {
+                    m1ViewModel.hitLogin(
+                        mobile_number = binding.mEnterMobile.text.toString(),
+                        password = binding.mEnterPassword.text.toString(),
+                        device_token = "asdf",
+                        device_type = 2,
+                        code = "+91"
+                    )
+                }
             }
         }
     }

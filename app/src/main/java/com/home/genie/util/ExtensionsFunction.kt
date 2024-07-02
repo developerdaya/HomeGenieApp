@@ -249,6 +249,14 @@ fun Fragment.moveActivityWithNoF(activity: Activity,number:Int) {
 fun AppCompatActivity.showToast(message: String?) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
+
+
+fun AppCompatActivity.showToastInternet() {
+    Toast.makeText(this, "Please enable connections", Toast.LENGTH_SHORT).show()
+}
+
+
+
 fun File.toConvertMultipartBodyPart(keyName: String): MultipartBody.Part? = this.let {
     MultipartBody.Part.createFormData(
         keyName, it.name,

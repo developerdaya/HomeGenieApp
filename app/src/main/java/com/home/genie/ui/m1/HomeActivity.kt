@@ -1,58 +1,192 @@
 package com.home.genie.ui.m1
 
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.viewpager.widget.ViewPager
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.gms.maps.model.LatLng
 import com.home.genie.R
 import com.home.genie.databinding.ActivityHomeBinding
-import com.home.genie.databinding.ErrorDialogBinding
+import com.home.genie.databinding.GpsDialogBinding
 import com.home.genie.databinding.LogoutDialogBinding
-import com.home.genie.databinding.OtpVerifyDialogBinding
 import com.home.genie.ui.m1.adapter.BeautyAdapter
 import com.home.genie.ui.m1.adapter.BeautyModel
-import com.home.genie.ui.m1.adapter.CleaningAdapter
 import com.home.genie.ui.m1.adapter.ViewPagerAdapter
 import com.home.genie.ui.moveActivity
 import com.home.genie.ui.showToast
-import com.home.genie.util.ErrorUtil
+import com.home.genie.util.GPSTracker
 import com.home.genie.util.SPreferenceUtils
-import com.home.genie.util.hideProgress
-import com.home.genie.util.showProgress
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.io.IOException
+import java.util.Locale
 import java.util.Timer
 import java.util.TimerTask
 
 class HomeActivity : AppCompatActivity() {
     lateinit var binding: ActivityHomeBinding
-
     private lateinit var mViewPager: ViewPager
     private var currentPage = 0
     private var timer: Timer? = null
-    private val DELAY_MS: Long = 2000 // Delay in milliseconds before task is to be executed
-    private val PERIOD_MS: Long = 2000 // Time in milliseconds between successive task executions.
+    private val DELAY_MS: Long = 2000
+    private val PERIOD_MS: Long = 2000
+    var liveLocation: Location? = null
+    val LOCATION_REQUEST_CODE = 101
+    val sharedPreference1: SPreferenceUtils by lazy { SPreferenceUtils.getInstance(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        window.setFlags(512,512)
         startAutoScroll()
         initControl()
+        if (SPreferenceUtils.getInstance(this).latitude!="")
+        {
+            val city = sharedPreference1.city
+            var state = sharedPreference1.state
+            var postalCode = sharedPreference1.postalCode
+            var country = sharedPreference1.countryName
+            var buildingNo = sharedPreference1.buildingNo
+            var sector = sharedPreference1.sector
+            binding.mAddress1?.text = "$buildingNo $sector"
+            binding.mAddress2.text = "$city, $state, $postalCode, $country"
+        }
+        else
+        {
+            getLocation1()
+        }
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == LOCATION_REQUEST_CODE) {
+            if (GPSTracker(this).isGPSEnabled)
+            {
+                liveLocation = GPSTracker(this).location
+                liveLocation?.let {
+                    getAddressFromLocation(it.latitude, it.longitude)
+                }
+            }
+            else
+            {
+                gpsDialog(this)
+            }
+        }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        if (SPreferenceUtils.getInstance(this).latitude!="")
+        {
+            val city = sharedPreference1.city
+            var state = sharedPreference1.state
+            var postalCode = sharedPreference1.postalCode
+            var country = sharedPreference1.countryName
+            var buildingNo = sharedPreference1.buildingNo
+            var sector = sharedPreference1.sector
+            binding.mAddress1?.text = "$buildingNo $sector"
+            binding.mAddress2.text = "$city, $state, $postalCode, $country"
+        }
+        else{
+            CoroutineScope(Dispatchers.Main).launch {
+                delay(5000)
+                if (GPSTracker(this@HomeActivity).isGPSEnabled)
+                {
+                    liveLocation = GPSTracker(this@HomeActivity).location
+                    liveLocation?.let {
+                        val mLatLng = LatLng(
+                            it.latitude,
+                            it.longitude)
+                        getAddressFromLocation(it.latitude,it.longitude)
+
+                    }
+
+                }
+            }
+        }
+
+
+    }
+
+    fun getLocation1() {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        {
+            if (GPSTracker(this).isGPSEnabled)
+            {
+                liveLocation = GPSTracker(this).location
+                liveLocation?.let {
+                    val mLatLng = LatLng(
+                        it.latitude,
+                        it.longitude)
+                    getAddressFromLocation(it.latitude,it.longitude)
+
+                }
+
+            }
+            else
+            {
+                gpsDialog(this)
+            }
+        }
+        else{
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_REQUEST_CODE)
+        }
+    }
+
+
+
+    private fun getAddressFromLocation(latitude: Double, longitude: Double) {
+        val geocoder = Geocoder(this)
+            val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+            var fullAddress = addresses!![0].getAddressLine(0)
+            var buildingNo = addresses[0].featureName
+            var sector = addresses[0].subLocality
+            var city = addresses[0].locality
+            var state = addresses[0].adminArea
+            val postalCode = addresses[0].postalCode
+            val country = addresses[0].countryName
+
+            binding.mAddress1?.text = "$buildingNo $sector"
+            binding.mAddress2?.text = "$city, $state, $postalCode, $country"
+
+    }
+
+    fun gpsDialog(context: Context) {
+        val binding = GpsDialogBinding.inflate(LayoutInflater.from(context))
+        val mBuilder = AlertDialog.Builder(context)
+            .setView(binding.root)
+            .create()
+        mBuilder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        mBuilder.setCancelable(false)
+        mBuilder.show()
+        binding.myButtonSkip.setOnClickListener {
+            mBuilder.dismiss()
+        }
+
+        binding.myButton.setOnClickListener {
+            mBuilder.dismiss()
+            startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
+
+        }
+
+
+    }
 
     private fun startAutoScroll() {
         val handler = android.os.Handler()
@@ -77,10 +211,10 @@ class HomeActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val NUM_PAGES = 6 /* Set the number of pages in your ViewPager adapter */
+        private const val NUM_PAGES = 4 /* Set the number of pages in your ViewPager adapter */
     }
-    fun logoutDialog(context: Context)
-    {
+
+    fun logoutDialog(context: Context) {
         val binding = LogoutDialogBinding.inflate(LayoutInflater.from(context))
         val mBuilder = AlertDialog.Builder(context)
             .setView(binding.root)
@@ -94,57 +228,55 @@ class HomeActivity : AppCompatActivity() {
 
         binding.myButton.setOnClickListener {
             mBuilder.dismiss()
-            SPreferenceUtils.getInstance(this).accessToken =""
-            SPreferenceUtils.getInstance(this).isLogin =false
+            SPreferenceUtils.getInstance(this).accessToken = ""
+            SPreferenceUtils.getInstance(this).isLogin = false
+            SPreferenceUtils.getInstance(this).latitude = ""
+            SPreferenceUtils.getInstance(this).longitude = ""
             moveActivity(LoginActivity())
             finishAffinity()
         }
 
 
-
-
     }
 
+
     private fun initControl() {
+        binding.mAddress1.setOnClickListener {
+            moveActivity(ChangeLocationActivity())
+        }
         binding.mLogout.setOnClickListener {
             logoutDialog(this)
 
         }
 
-        var lis3 = ArrayList<BeautyModel>()
-        lis3.add(BeautyModel("Pain relief",R.drawable.beauty))
-        lis3.add(BeautyModel("Stress relief",R.drawable.beauty))
-        lis3.add(BeautyModel("Post workout",R.drawable.beauty))
-        lis3.add(BeautyModel("body massage",R.drawable.beauty))
-
 
 
         var list = ArrayList<BeautyModel>()
-        list.add(BeautyModel("Women Spa",R.drawable.beauty))
-        list.add(BeautyModel("Men's Salon",R.drawable.beauty))
-        list.add(BeautyModel("Ac Appliance",R.drawable.beauty))
-        list.add(BeautyModel("Cleaning",R.drawable.beauty))
-             list.add(BeautyModel("Electronics",R.drawable.beauty))
-        list.add(BeautyModel("Water Purifier",R.drawable.beauty))
+        list.add(BeautyModel("Tech Support", R.drawable.tech_support_banner))
+        list.add(BeautyModel("Home Services", R.drawable.home_services))
+        list.add(BeautyModel("Education & Coaching", R.drawable.education_banner))
+        list.add(BeautyModel("Home Improvement", R.drawable.home_interior))
 
 
-          var lis2 = ArrayList<BeautyModel>()
-        lis2.add(BeautyModel("Ac Repair Services",R.drawable.beauty))
-        lis2.add(BeautyModel("Water \nPurifier",R.drawable.beauty))
-        lis2.add(BeautyModel("Chimney Repair",R.drawable.beauty))
-        lis2.add(BeautyModel("Refridgerator Repair",R.drawable.beauty))
-        lis2.add(BeautyModel("Washing Machine Repair",R.drawable.beauty))
-        lis2.add(BeautyModel("Television Repair",R.drawable.beauty))
+        var lis2 = ArrayList<BeautyModel>()
+        lis2.add(BeautyModel("Home Services", R.drawable.house_icon))
+        lis2.add(BeautyModel("Repairs", R.drawable.repair_tool))
+        lis2.add(BeautyModel("Education & Coaching", R.drawable.learning_support))
 
-        binding.mViewPager2.adapter = ViewPagerAdapter(this, lis2)
+        lis2.add(BeautyModel("Health & Medical", R.drawable.public_health))
+        lis2.add(BeautyModel("Automotive Services", R.drawable.car_services))
+        lis2.add(BeautyModel("Personal Services", R.drawable.personalized))
+
+        lis2.add(BeautyModel("Home Improvement", R.drawable.house_cleaning))
+        lis2.add(BeautyModel("Business Services", R.drawable.busibess_responsible))
+        lis2.add(BeautyModel("Tech Support", R.drawable.tech_support))
+
+
+
+        binding.mViewPager2.adapter = ViewPagerAdapter(this, list)
         binding.mDotsIndicator.setViewPager(binding.mViewPager2)
+        binding.rvBeauty.adapter = BeautyAdapter(this,lis2)
 
-
-
-
-
-        binding.rvBeauty.adapter = BeautyAdapter(list)
-        binding.rvCleaning.adapter = CleaningAdapter(lis2)
-        binding.rvMessage.adapter = CleaningAdapter(lis3)
     }
+
 }
